@@ -1,10 +1,12 @@
 package com.example.news
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
 
@@ -12,6 +14,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var newArrayList : ArrayList<News>
     lateinit var imageId : Array<Int>
     lateinit var heading : Array<String>
+    lateinit var news : Array<String>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +34,7 @@ class MainActivity : AppCompatActivity() {
             R.drawable.a,
             R.drawable.a,
             R.drawable.a,
-            R.drawable.a,
+            R.drawable.a
         )
         heading = arrayOf(
             "1st giga chad badri ",
@@ -45,8 +48,24 @@ class MainActivity : AppCompatActivity() {
             "9th giga chad badri",
             "10th giga chad badri",
             "11th giga chad badri",
-            "12th giga chad badri",
+            "12th giga chad badri"
         )
+
+        news = arrayOf(
+            "news 1",
+            "news 2",
+            "news 3",
+            "news 4",
+            "news 5",
+            "news 6",
+            "news 7",
+            "news 8",
+            "news 9",
+            "news 10",
+            "news 11",
+            "news 12"
+        )
+
         //initializing and loyout for recyclerview
         newRecyclerView = findViewById(R.id.recyclerView)
         newRecyclerView.layoutManager = LinearLayoutManager(this)
@@ -66,7 +85,14 @@ class MainActivity : AppCompatActivity() {
         newRecyclerView.adapter = adapter
         adapter.setOnItemClickListener(object : MyAdapter.onItemClickListener{
             override fun onItemClick(position: Int) {//here we get position of waht the user clicked
-                Toast.makeText(this@MainActivity,"you clicked giga chad ${position+1} badri",Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this@MainActivity,"you clicked giga chad ${position+1} badri",Toast.LENGTH_SHORT).show()
+                //to go to next activity and pass the context using intent
+                val intent = Intent(this@MainActivity,NewsActivity::class.java)
+                 //we will pass image src id,heading of news,news article
+                intent.putExtra("heading",newArrayList[position].heading)
+                intent.putExtra("imageid",newArrayList[position].titleImage)
+                intent.putExtra("news",news[position])
+                startActivity(intent)
             }
 
         })
