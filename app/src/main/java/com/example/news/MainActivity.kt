@@ -2,6 +2,7 @@ package com.example.news
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -17,6 +18,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        //manually setting data
         imageId = arrayOf(
             R.drawable.a,
             R.drawable.a,
@@ -45,6 +47,7 @@ class MainActivity : AppCompatActivity() {
             "11th giga chad badri",
             "12th giga chad badri",
         )
+        //initializing and loyout for recyclerview
         newRecyclerView = findViewById(R.id.recyclerView)
         newRecyclerView.layoutManager = LinearLayoutManager(this)
         newRecyclerView.setHasFixedSize(true)
@@ -58,7 +61,15 @@ class MainActivity : AppCompatActivity() {
             val news = News(imageId[i],heading[i])//creatd a single news
             newArrayList.add(news)//adding the created single news to the newArrayList
         }
-        newRecyclerView.adapter = MyAdapter(newArrayList)
+        //setting adapter for recyclerview
+        val adapter = MyAdapter(newArrayList)
+        newRecyclerView.adapter = adapter
+        adapter.setOnItemClickListener(object : MyAdapter.onItemClickListener{
+            override fun onItemClick(position: Int) {//here we get position of waht the user clicked
+                Toast.makeText(this@MainActivity,"you clicked giga chad ${position+1} badri",Toast.LENGTH_SHORT).show()
+            }
+
+        })
     }
 
 }
